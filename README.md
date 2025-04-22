@@ -1,63 +1,63 @@
-# 🚀 Optimizing Supply Chain Efficiency for SpaceX (Starlink)
+# 🎬 Creator Monetization Analytics Platform
 
 ## 🛠️ Tech Stack
-- Python
-- SQL
-- dbt
-- AWS RDS PostgreSQL
-- GitHub Actions
-- Power BI / Tableau
+- **Python** – For API requests and web scraping
+- **SQL** – For querying and analyzing structured data
+- **dbt** – For data transformation and modeling (dimensional models)
+- **AWS RDS PostgreSQL** – Cloud-hosted database for storing raw and transformed data
+- **GitHub Actions** – For automation of data extraction and transformation workflows
+- **Power BI / Tableau** – For building dashboards and visualizations
 
 ## 🎯 Project Objective
-This project is designed to support SpaceX's mission by enhancing supply chain operations through data-driven insights. It focuses on identifying inefficiencies in transportation and vendor performance using real-world public datasets, SQL queries, automated data pipelines, and BI visualizations. 
+This project supports YouTube Ads’ internal business intelligence efforts by building an analytics-ready dataset focused on creator monetization. The goal is to surface insights that help internal business users understand how different content categories, creators, and engagement levels influence revenue generation on the platform.
 
-By building tools to monitor and optimize delivery performance, this project mirrors the type of work expected from a Supply Chain Data Analyst at SpaceX — enabling operational improvements and systemic risk reduction.
+By integrating YouTube API data with external monetization benchmarks, this project empowers decision-makers to scale insights and identify high-impact monetization strategies.
 
 ## 💼 Job Description
-**Position:** Data Analyst, Supply Chain (Starlink)  
-**Company:** SpaceX  
-**Location:** Redmond, WA  
+**Role:** Data Products Analyst  
+**Company:** YouTube (Google)  
+**Team:** YouTube Ads  
 
-As part of the Starlink supply chain team, the role involves developing data-driven tools and systems to optimize vendor performance, streamline logistics, and improve delivery outcomes. Key skills include SQL, Power BI/Tableau, data pipeline development, and cross-functional collaboration to support supply chain improvements and Starlink scalability.
+The position focuses on designing and maintaining scalable data pipelines, building BI products, and ensuring robust and trustworthy data for teams managing content partnerships, advertising, and platform operations. It requires fluency in SQL, Python, and data infrastructure tools.
 
-This project aligns with the position by:
-- Using SQL and data modeling to find trends in transportation and vendor efficiency.
-- Building a data pipeline that mimics the responsibilities of owning system maintenance and reporting.
-- Visualizing metrics relevant to procurement and logistics.
+**Alignment:** This project mirrors the job by:
+- Designing custom data pipelines using real-world public APIs
+- Modeling data with dbt to improve usability and governance
+- Delivering insights via SQL queries and visualizations
 
 👉 [Job_Description.pdf](./proposal/Job_Description.pdf)
 
 ## 📊 Data
 
 ### Sources
-- **[U.S. Department of Transportation (DOT) API](https://www.transportation.gov/data)**  
-  Source of public infrastructure and logistics data such as travel times, road bottlenecks, and traffic incidents.
-  
-- **[Federal Motor Carrier Safety Administration (FMCSA)](https://www.fmcsa.dot.gov/)**  
-  Provides detailed data on fleet safety, carrier violations, and inspection results—key for evaluating vendor delivery performance.
+- **YouTube Data API v3**  
+  [YouTube API Docs](https://developers.google.com/youtube/v3)  
+  Collects video-level metadata, engagement stats, and channel details from YouTube.
+
+- **Web Scrape**: [InfluencerMarketingHub.com](https://influencermarketinghub.com/youtube-money-calculator/) or [SocialBlade.com](https://socialblade.com/)  
+  Provides creator CPM benchmarks, estimated ad revenue, and content category monetization insights.
 
 ### Characteristics
-- Publicly accessible, regulatory-compliant data
-- Includes timestamps, geographic metadata, safety scores, and inspection events
-- Requires cleaning and filtering to focus on business-relevant metrics like delay frequency and vendor risk indicators
+- **API data**: Dynamic and reliable, with direct relevance to YouTube’s creator ecosystem.
+- **Web scraped data**: Public-facing benchmarks and trends that complement internal creator data with market-wide revenue indicators.
 
 ## 📁 Notebooks / Python Scripts
-- [`notebooks/FMCSA_API_Extract_Load_Raw.ipynb`](./notebooks/FMCSA_API_Extract_Load_Raw.ipynb):  
-  Extracts and stores FMCSA data in AWS PostgreSQL.
+- `notebooks/youtube_API_Extract_Load_Raw.ipynb`  
+  Extracts video and channel metadata from the YouTube API and loads it into AWS PostgreSQL.
 
-- [`notebooks/DOT_Web_Scrape_Extract_Load_Raw.ipynb`](./notebooks/DOT_Web_Scrape_Extract_Load_Raw.ipynb):  
-  Scrapes DOT infrastructure and logistics data and loads it to the database.
+- `notebooks/youtube_Web_Scrape_Extract_Load_Raw.ipynb`  
+  Scrapes CPM and monetization data from benchmark sites and stores it in the database.
 
-- `dbt/models/staging/stg_fmcsa_api.sql` & `stg_dot_web_scrape.sql`:  
-  Cleans and normalizes raw data for analytics.
+- `dbt/models/staging/stg_youtube_api.sql`  
+  Cleans and formats API-sourced data for analytics.
 
-- `dbt/models/warehouse/fct_delivery_performance.sql` & `dim_vendors.sql`:  
-  Fact and dimension tables designed to support descriptive and diagnostic analytics.
+- `dbt/models/staging/stg_youtube_web_scrape.sql`  
+  Transforms scraped monetization data for reporting.
+
+- `dbt/models/warehouse/fct_creator_revenue.sql`, `dim_content_category.sql`  
+  Final fact/dimension models used to power BI dashboards and insights.
 
 ## 🔮 Future Improvements
-- Integrate SpaceX vendor names and delivery logs (if accessible) to enrich the analysis.
-- Expand the dashboard to support drill-down insights by region, vendor, or carrier.
-- Deploy the pipeline on a regular schedule via GitHub Actions with monitoring alerts for SLA breaches.
-
----
-
+- Include sentiment analysis on video comments or titles using NLP.
+- Blend in upload frequency and subscriber growth for creator performance modeling.
+- Add geographic-level analysis of monetization using location-based metadata (if available from the API).
