@@ -26,7 +26,7 @@ resp = youtube.videos().list(
     chart="mostPopular",
     regionCode="US",
     videoCategoryId="10",  # Music
-    maxResults=27
+    maxResults=21
 ).execute()
 
 today = datetime.utcnow().date().isoformat()
@@ -58,7 +58,7 @@ df = pd.DataFrame(rows)
 
 # %%
 # Preview
-print(df.head(27))
+print(df.head(21))
 
 
 # %%
