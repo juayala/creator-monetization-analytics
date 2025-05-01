@@ -41,10 +41,10 @@ for v in resp["items"]:
     rows.append({
         "video_id":      v["id"],
         "title":         snip["title"],
+        "published_at":  snip["publishedAt"],
         "channel_id":    snip["channelId"],
         "channel_name":  snip["channelTitle"],
-        # "published_at":  snip["publishedAt"],
-        # "duration_s":    dur_s,
+        "duration_s":    dur_s,
         "view_count":    int(stats.get("viewCount", 0)),
         "like_count":    int(stats.get("likeCount", 0)),
         "comment_count": int(stats.get("commentCount", 0)),
@@ -53,6 +53,10 @@ for v in resp["items"]:
 # %%
 # Build the DataFrame
 df = pd.DataFrame(rows)
+
+# convert the publishedAt string into a date-only column
+df['published_at'] = pd.to_datetime(df['published_at']) \
+                       .dt.strftime('%Y-%m-%d')
 
 # %%
 # Preview
@@ -76,3 +80,4 @@ df.to_sql('yt_trending', pg_engine, schema='raw', if_exists='replace', index=Fal
 # %%
 # Print confirmation message
 print(f'{len(df)} records loaded into Postgres yt_trending table.')
+# %%
