@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  API_KEY:     ${{ secrets.API_KEY }}
-  PG_USER:     ${{ secrets.PG_USER }}
-  PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
-  PG_HOST:     ${{ secrets.PG_HOST }}
-  PG_DB:       ${{ secrets.PG_DB }}
+  FIRECRAWL_API_KEY:     ${{ secrets.FIRECRAWL_API_KEY }}
+  PG_USER:               ${{ secrets.PG_USER }}
+  PG_PASSWORD:           ${{ secrets.PG_PASSWORD }}
+  PG_HOST:               ${{ secrets.PG_HOST }}
+  PG_DB:                 ${{ secrets.PG_DB }}
 
 jobs:
   extract-load-raw:
