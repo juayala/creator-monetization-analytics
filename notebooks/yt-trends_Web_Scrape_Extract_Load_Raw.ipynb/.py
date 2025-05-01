@@ -19,7 +19,7 @@ scrape_result = app.scrape_url(
       "prompt": (
         "Extract the video id, video name, channel name, view count, "
         "like count, comment count, and rank from the page. "
-        "Iterate these steps for the entire list on the website until you reach rank 22."
+        "Iterate these steps for the entire list on the website until you reach rank 21."
       )
     }
 )
@@ -53,5 +53,3 @@ df.to_sql('yt_video', pg_engine, schema='raw', if_exists='replace', index=False)
 # %%
 # Print confirmation message
 print(f'{len(df)} records loaded into Postgres yt_video table.')
-
-
