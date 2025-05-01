@@ -29,7 +29,7 @@ jobs:
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-api-python-client python-dotenv sqlalchemy psycopg2-binary pandas os re
+          pip install google-api-python-client python-dotenv sqlalchemy psycopg2-binary pandas re
 
       - name: Extract & load trending to raw schema
         run: |
