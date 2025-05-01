@@ -3,12 +3,14 @@ from firecrawl import FirecrawlApp
 import pandas as pd
 from sqlalchemy import create_engine
 import os
+from dotenv import load_dotenv
 
 
+load_dotenv()
 # %%
-from firecrawl import FirecrawlApp
+api_key = os.getenv("FIRECRAWL_API_KEY")
 
-app = FirecrawlApp(api_key="fc-9d84309514864cea803c826ecbdbe7f2")
+app = FirecrawlApp(api_key=api_key)
 
 url = 'https://yt-trends.iamrohit.in/United-States-of-America/music'
 
@@ -18,6 +20,7 @@ scrape_result = app.scrape_url(url, {
         'prompt': 'Extract the video id, video name, channel name, view count, like count, comment count, and rank from the page. Iterate these steps for the entire list on the website'
     }
 })
+
 scrape_result
 # %%
 
