@@ -39,9 +39,9 @@ for v in resp["items"]:
         continue
 
     rows.append({
+        "published_at":  snip["publishedAt"],
         "video_id":      v["id"],
         "title":         snip["title"],
-        "published_at":  snip["publishedAt"],
         "channel_id":    snip["channelId"],
         "channel_name":  snip["channelTitle"],
         "duration_s":    dur_s,
