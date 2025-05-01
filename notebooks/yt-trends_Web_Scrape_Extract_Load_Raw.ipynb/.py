@@ -12,18 +12,17 @@ api_key = os.getenv("FIRECRAWL_API_KEY")
 
 app = FirecrawlApp(api_key=api_key)
 
-url = 'https://yt-trends.iamrohit.in/United-States-of-America/music'
+opts = {
+  "formats":    ["json"],
+  "jsonOptions": {
+    "prompt": "Extract the video id, video name, channel name, view count, like count, comment count, and rank from the page. Iterate these steps for the entire list on the website until you reach rank 21."
+  }
+}
 
-scrape_result = app.scrape_url(url, {
-    'formats': ['json'],
-    'jsonOptions': {
-        'prompt': 'Extract the video id, video name, channel name, view count, like count, comment count, and rank from the page. Iterate these steps for the entire list on the website'
-    }
-})
+scrape_result = app.scrape_url("https://yt-trends.iamrohit.in/United-States-of-America/music", opts)
 
 scrape_result
 # %%
-
 youtube = scrape_result['json']['videos']
 
 # Convert the scraped JSON data to a DataFrame
