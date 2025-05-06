@@ -29,6 +29,14 @@ resp = youtube.videos().list(
     maxResults=21
 ).execute()
 
+channel_totals = {}
+for v in resp["items"]:
+    snip = v["snippet"]
+    stats = v.get("statistics", {})
+    channel = snip["channelTitle"]
+    views = int(stats.get("viewCount", 0))
+    channel_totals[channel] = channel_totals.get(channel, 0) + views
+
 rows = []
 for v in resp["items"]:
     snip = v["snippet"]
@@ -38,12 +46,14 @@ for v in resp["items"]:
     if dur_s <= 60:
         continue
 
+    channel = snip["channelTitle"]
     rows.append({
         "published_at":  snip["publishedAt"],
         "video_id":      v["id"],
         "title":         snip["title"],
         "channel_id":    snip["channelId"],
-        "channel_name":  snip["channelTitle"],
+        "channel_name":  channel,
+        "channel_total_views": channel_totals[channel],
         "duration_s":    dur_s,
         "view_count":    int(stats.get("viewCount", 0)),
         "like_count":    int(stats.get("likeCount", 0)),
@@ -58,6 +68,11 @@ df = pd.DataFrame(rows)
 df['published_at'] = pd.to_datetime(df['published_at']) \
                        .dt.strftime('%Y-%m-%d')
 
+df['channel_total_views'] = (
+    df
+    .groupby('channel_name')['view_count']
+    .transform('sum')
+)
 # %%
 # Preview
 print(df.head(21))
