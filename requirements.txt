@@ -1,0 +1,7 @@
+google-api-python-client 
+python-dotenv 
+sqlalchemy 
+psycopg2-binary 
+pandas 
+os 
+re
