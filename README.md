@@ -3,61 +3,154 @@
 ## 🛠️ Tech Stack
 - **Python** – For API requests and web scraping
 - **SQL** – For querying and analyzing structured data
-- **dbt** – For data transformation and modeling (dimensional models)
+- **dbt** – For data transformation and dimensional modeling
 - **AWS RDS PostgreSQL** – Cloud-hosted database for storing raw and transformed data
-- **GitHub Actions** – For automation of data extraction and transformation workflows
-- **Power BI / Tableau** – For building dashboards and visualizations
+- **GitHub Actions** – For workflow automation of extract, transform, and load processes
+- **Google Looker Studio** – For building interactive dashboards and data visualizations
+
+---
 
 ## 🎯 Project Objective
-This project supports YouTube Ads’ internal business intelligence efforts by building an analytics-ready dataset focused on creator monetization. The goal is to surface insights that help internal business users understand how different content categories, creators, and engagement levels influence revenue generation on the platform.
+This project emulates a real-world data analyst role at YouTube Ads by building a data product that analyzes creator monetization trends. The goal is to identify which content categories, creators, and engagement patterns drive the most ad revenue on the platform.
 
-By integrating YouTube API data with external monetization benchmarks, this project empowers decision-makers to scale insights and identify high-impact monetization strategies.
+We leverage YouTube video performance data alongside monetization benchmarks to deliver actionable insights that support business teams in optimizing creator partnerships and content strategies.
 
-## 💼 Job Description
+---
+
+## 💼 Job Description Alignment
 **Role:** Data Products Analyst  
 **Company:** YouTube (Google)  
 **Team:** YouTube Ads  
 
-The position focuses on designing and maintaining scalable data pipelines, building BI products, and ensuring robust and trustworthy data for teams managing content partnerships, advertising, and platform operations. It requires fluency in SQL, Python, and data infrastructure tools.
+This project mirrors the responsibilities in the job posting by:
+- Designing ETL pipelines using Python and SQL
+- Structuring analytics-ready tables with dbt
+- Running SQL-based insights on creator engagement
+- Visualizing findings via Looker Studio dashboards
 
-**Alignment:** This project mirrors the job by:
-- Designing custom data pipelines using real-world public APIs
-- Modeling data with dbt to improve usability and governance
-- Delivering insights via SQL queries and visualizations
+📎 [Job_Description.pdf](./proposal/Job_Description.pdf)
 
-👉 [Job_Description.pdf](./proposal/Job_Description.pdf)
+---
 
 ## 📊 Data
 
-### Sources
+### 📡 Sources
 - **YouTube Data API v3**  
   [YouTube API Docs](https://developers.google.com/youtube/v3)  
-  Collects video-level metadata, engagement stats, and channel details from YouTube.
+  Collects trending video metadata including title, channel, views, likes, and rank.
 
-- **Web Scrape**: [InfluencerMarketingHub.com](https://influencermarketinghub.com/youtube-money-calculator/) or [SocialBlade.com](https://socialblade.com/)  
-  Provides creator CPM benchmarks, estimated ad revenue, and content category monetization insights.
+- **Web Scrape – yt-trends.iamrohit.in**  
+  Uses Firecrawl and BeautifulSoup to extract reaction and ranking data from trending music videos in the U.S.  
+  Supports benchmarking creator popularity and breakout content performance.
 
-### Characteristics
-- **API data**: Dynamic and reliable, with direct relevance to YouTube’s creator ecosystem.
-- **Web scraped data**: Public-facing benchmarks and trends that complement internal creator data with market-wide revenue indicators.
+### 🔍 Characteristics
+- Real-time trending data from a third-party site tracking YouTube video stats
+- Rich with creator/channel-level insights such as views, likes, and rank metrics
+
+---
+
+## 📁 Repository Structure
+├── .github/workflows/
+│ ├── yt_trends_api_pipeline.yml
+│ ├── yt_trends_web_scrape_pipeline.yml
+│ └── dbt_pipeline.yml
+├── data/
+│ ├── yt_trends_API_Data_Pipeline.pdf
+│ ├── yt_trends_Web_Scrape_Data_Pipeline.pdf
+│ ├── yt_trends_API_ERD.pdf
+│ └── yt_trends_Web_Scrape_ERD.pdf
+├── notebooks/
+│ ├── yt_trends_API_Extract_Load_Raw.ipynb
+│ ├── yt_trends_Web_Scrape_Extract_Load_Raw.ipynb
+│ ├── yt_trends_API_SQL_Analysis.ipynb
+│ └── yt_trends_Web_Scrape_SQL_Analysis.ipynb
+├── dbt/
+│ ├── models/
+│ │ ├── staging/
+│ │ │ ├── stg_yt_trends_api.sql
+│ │ │ └── stg_yt_trends_web_scrape.sql
+│ │ └── warehouse/
+│ │ ├── dim_channel.sql
+│ │ └── fct_creator_reactions.sql
+│ └── dbt_project.yml
+├── proposal/
+│ ├── Project_Proposal.pdf
+│ └── Job_Description.pdf
+├── reports/
+│ ├── Presentation.pdf
+│ └── Visualizations.pdf
+└── README.md
+
+
+---
 
 ## 📁 Notebooks / Python Scripts
-- `notebooks/youtube_API_Extract_Load_Raw.ipynb`  
-  Extracts video and channel metadata from the YouTube API and loads it into AWS PostgreSQL.
+- `yt_trends_API_Extract_Load_Raw.ipynb`  
+  Fetches top 50 trending music videos via yt-trends API and stores in PostgreSQL.
 
-- `notebooks/youtube_Web_Scrape_Extract_Load_Raw.ipynb`  
-  Scrapes CPM and monetization data from benchmark sites and stores it in the database.
+- `yt_trends_Web_Scrape_Extract_Load_Raw.ipynb`  
+  Scrapes additional engagement metrics such as reaction counts and ranks.
 
-- `dbt/models/staging/stg_youtube_api.sql`  
-  Cleans and formats API-sourced data for analytics.
+- `yt_trends_API_SQL_Analysis.ipynb`  
+  Includes descriptive and diagnostic SQL queries on view counts and top creators.
 
-- `dbt/models/staging/stg_youtube_web_scrape.sql`  
-  Transforms scraped monetization data for reporting.
+- `yt_trends_Web_Scrape_SQL_Analysis.ipynb`  
+  Ranks channels by total reactions and identifies top-performing videos per channel.
 
-- `dbt/models/warehouse/fct_creator_revenue.sql`, `dim_content_category.sql`  
-  Final fact/dimension models used to power BI dashboards and insights.
+---
+
+## 🧠 Insight Example
+![Sample Analysis]
+
+From `yt_trends_Web_Scrape_SQL_Analysis.ipynb`:
+- **HYBE LABELS** leads with 972,000 total reactions across multiple uploads.
+- **Maroon5VEVO** follows with 672,600 reactions—entirely from a single hit video.
+- **Recommendation**: Avoid overdependence on one hit; spread engagement with sequels, clips, and smart thumbnails.
+- **Prediction**: Channels mimicking these tactics may increase reactions by 15–20% in the next month.
+
+---
+
+## 📊 Visualizations
+All visualizations were created in **Google Looker Studio**, connecting to PostgreSQL for live querying and dashboard development.
+
+📎 [Visualizations.pdf](./reports/Visualizations.pdf)
+
+Highlights include:
+- Bar chart: Total reactions by channel
+- Line chart: Engagement trends over time
+- Comparison: CPM estimates vs actual view counts
+
+---
 
 ## 🔮 Future Improvements
-- Include sentiment analysis on video comments or titles using NLP.
-- Blend in upload frequency and subscriber growth for creator performance modeling.
-- Add geographic-level analysis of monetization using location-based metadata (if available from the API).
+- Add NLP-based sentiment analysis on video comments
+- Enrich dataset with upload cadence and audience retention metrics
+- Expand beyond U.S. market to track global trends by region
+
+---
+
+## 📦 Analytics Framework Reference
+
+**1. Define the business problem**  
+Which creators and content types drive the most monetizable engagement?
+
+**2. Collect and prepare data**  
+Extracted video metrics via yt-trends API and scraped additional benchmarks.
+
+**3. Analyze the data**  
+SQL queries with aggregation, window functions, joins, and CTEs.
+
+**4. Communicate insights**  
+Google Looker dashboards supported with clear recommendations.
+
+**5. Take action**  
+Target content production and creator collaboration based on the top monetization signals.
+
+---
+
+## 👤 About Me
+**Jonathan Ayala**  
+📍 Los Angeles, CA  
+🎓 LMU ISBA 2025 | 🎯 Deloitte Incoming Analyst  
+📧 j.ayala0014@gmail.com | 🔗 [LinkedIn](https://www.linkedin.com/in/ju-ayala)
+
